@@ -1,6 +1,7 @@
 package com.example.bookshop.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -8,14 +9,17 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "categories")
+    private List<Book> book;
 
     public Category() {
     }
 
     public Category(String name) {
-        super();
         this.name = name;
     }
 
