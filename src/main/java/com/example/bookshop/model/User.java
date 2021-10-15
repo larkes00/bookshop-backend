@@ -1,6 +1,7 @@
 package com.example.bookshop.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,25 +19,36 @@ public class User {
     @Column
     private String patronymic;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false, unique = true, length = 20)
     private String phoneNumber;
 
-    @Column(nullable = false)
-    private String email;
+    @Column(name = "email_address", nullable = false, unique = true, length = 100)
+    private String emailAddress;
 
     @Column(nullable = false)
-    private String address;
+    private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comment;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> order;
 
     public User() {
     }
 
-    public User(String surname, String name, String patronymic, String phoneNumber, String email, String address) {
+    public User(
+            String surname, String name, String patronymic,
+            String phoneNumber, String emailAddress, String password,
+            List<Comment> comment, List<Order> order) {
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
         this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.address = address;
+        this.emailAddress = emailAddress;
+        this.password = password;
+        this.comment = comment;
+        this.order = order;
     }
 
     public long getId() {
@@ -79,19 +91,35 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
 }

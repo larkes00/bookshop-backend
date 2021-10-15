@@ -14,23 +14,38 @@ public class Book {
     @Column(nullable = false)
     private String name;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @Column(nullable = false)
     private BigDecimal price;
+
+    @Column(name = "books_available_number", nullable = false, columnDefinition = "integer  default 0")
+    private int booksAvailableNumber;
 
     @Column(nullable = false)
     private String image;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Category categories;
+    @ManyToOne
+    private Category category;
+
+    @ManyToOne
+    private Comment comment;
 
     public Book() {
     }
 
-    public Book(String name, BigDecimal price, String image, Category categories) {
+    public Book(
+            String name, String description, BigDecimal price,
+            int booksAvailableNumber, String image, Category category,
+            Comment comment) {
         this.name = name;
+        this.description = description;
         this.price = price;
+        this.booksAvailableNumber = booksAvailableNumber;
         this.image = image;
-        this.categories = categories;
+        this.category = category;
+        this.comment = comment;
     }
 
     public long getId() {
@@ -49,12 +64,28 @@ public class Book {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public int getBooksAvailableNumber() {
+        return booksAvailableNumber;
+    }
+
+    public void setBooksAvailableNumber(int booksAvailableNumber) {
+        this.booksAvailableNumber = booksAvailableNumber;
     }
 
     public String getImage() {
@@ -65,11 +96,19 @@ public class Book {
         this.image = image;
     }
 
-    public Category getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Category categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 }
