@@ -4,6 +4,7 @@ import com.example.bookshop.model.Category;
 import com.example.bookshop.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -36,5 +37,13 @@ public class CategoryController {
     public ResponseEntity<String> deleteCategory(@RequestParam Long id) {
         boolean category = categoryService.delete(id);
         return !category ? ResponseEntity.badRequest().body("No such category") : ResponseEntity.ok("deleted");
+    }
+
+    @PostMapping(value = "/", consumes={"application/json"})
+    public ResponseEntity<?> createCategory(@RequestBody Category category) {
+        Category tempCategory = categoryService.create(category);
+        return tempCategory == null ? ResponseEntity.badRequest().body("Category exists") : ResponseEntity.ok(
+                tempCategory
+        );
     }
 }

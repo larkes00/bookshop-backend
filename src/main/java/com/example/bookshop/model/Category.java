@@ -19,9 +19,8 @@ public class Category {
     public Category() {
     }
 
-    public Category(String name, List<Book> book) {
+    public Category(String name) {
         this.name = name;
-        this.book = book;
     }
 
     public long getId() {
