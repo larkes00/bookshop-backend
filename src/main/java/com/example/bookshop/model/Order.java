@@ -1,9 +1,20 @@
 package com.example.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "orders")
 public class Order {
     @Id
@@ -17,58 +28,10 @@ public class Order {
     private String deliveryAddress;
 
     @ManyToMany
+    @JsonManagedReference
     private List<Book> book;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
-
-    public Order() {
-    }
-
-    public Order(String status, String deliveryAddress, List<Book> book, User user) {
-        this.status = status;
-        this.deliveryAddress = deliveryAddress;
-        this.book = book;
-        this.user = user;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public List<Book> getBook() {
-        return book;
-    }
-
-    public void setBook(List<Book> book) {
-        this.book = book;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

@@ -1,9 +1,19 @@
 package com.example.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "books")
 public class Book {
     @Id
@@ -26,88 +36,10 @@ public class Book {
     private String image;
 
     @ManyToOne
+    @JsonBackReference
     private Category category;
 
     @ManyToOne
+    @JsonBackReference
     private Comment comment;
-
-    public Book() {
-    }
-
-    public Book(
-            String name, String description, BigDecimal price,
-            int booksAvailableNumber, String image, Category category,
-            Comment comment) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.booksAvailableNumber = booksAvailableNumber;
-        this.image = image;
-        this.category = category;
-        this.comment = comment;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getBooksAvailableNumber() {
-        return booksAvailableNumber;
-    }
-
-    public void setBooksAvailableNumber(int booksAvailableNumber) {
-        this.booksAvailableNumber = booksAvailableNumber;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
 }
