@@ -8,7 +8,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
-
-    @Autowired
-    private OrderRepository orderRepository;
 }

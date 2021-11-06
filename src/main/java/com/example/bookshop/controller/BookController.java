@@ -8,7 +8,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
-
-    @Autowired
-    private BookRepository bookRepository;
 }

@@ -1,25 +1,40 @@
 package com.example.bookshop.controller;
 
 import com.example.bookshop.model.Category;
-import com.example.bookshop.repository.CategoryRepository;
+import com.example.bookshop.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryServiceImpl categoryService;
 
     @GetMapping("/")
-    public List<Category> getAllCategory() {
-        return categoryRepository.findAll();
+    public ResponseEntity<Collection<Category>> getAllCategory(@RequestParam int limit) {
+        return ResponseEntity.ok(
+                categoryService.list(limit)
+        );
+    }
+
+    @GetMapping("/{id}/")
+    public ResponseEntity<Map<String, Category>> getCategoryById(@PathVariable Long id) {
+        Category category = categoryService.get(id);
+        return category == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(
+                Map.of("category", categoryService.get(id))
+        );
+    }
+
+    @DeleteMapping("/")
+    public ResponseEntity<String> deleteCategory(@RequestParam Long id) {
+        boolean category = categoryService.delete(id);
+        return !category ? ResponseEntity.badRequest().body("No such category") : ResponseEntity.ok("deleted");
     }
 }

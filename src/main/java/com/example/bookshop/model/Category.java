@@ -40,10 +40,6 @@ public class Category {
         this.name = name;
     }
 
-    public List<Book> getBook() {
-        return book;
-    }
-
     public void setBook(List<Book> book) {
         this.book = book;
     }
