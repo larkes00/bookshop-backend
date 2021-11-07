@@ -1,13 +1,11 @@
 package com.example.bookshop.controller;
 
-import com.example.bookshop.model.Category;
+import com.example.bookshop.exception.CategoryExistsException;
+import com.example.bookshop.exception.CategoryNotFoundException;
 import com.example.bookshop.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
-import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -18,31 +16,43 @@ public class CategoryController {
     private CategoryServiceImpl categoryService;
 
     @GetMapping("categories/")
-    public ResponseEntity<Collection<Category>> getAllCategory(@RequestParam int limit) {
+    public ResponseEntity<?> getAllCategory() {
         return ResponseEntity.ok(
-                categoryService.list(limit)
+                categoryService.list()
         );
     }
 
-    @GetMapping("categories/{id}/")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        Category category = categoryService.get(id);
-        return category == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(
-                categoryService.get(id)
-        );
+    @GetMapping("categories/{id}/books/")
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(categoryService.get(id));
+        } catch (CategoryNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("categories/{id}/")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
-        boolean category = categoryService.delete(id);
-        return !category ? ResponseEntity.badRequest().body("No such category") : ResponseEntity.ok("deleted");
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+        try {
+            categoryService.delete(id);
+            return ResponseEntity.ok("Deleted");
+        } catch (CategoryNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @PostMapping(value = "categories/", consumes={"application/json"})
-    public ResponseEntity<?> createCategory(@RequestBody Category category) {
-        Category tempCategory = categoryService.create(category);
-        return tempCategory == null ? ResponseEntity.badRequest().body("Category exists") : ResponseEntity.ok(
-                tempCategory
-        );
+    @PostMapping(value = "categories/")
+    public ResponseEntity<?> createCategory(@RequestParam String name) {
+        try {
+            return ResponseEntity.ok(categoryService.create(name));
+        } catch (CategoryExistsException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
