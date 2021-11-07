@@ -39,7 +39,7 @@ public class CategoryController {
             categoryService.delete(id);
             return ResponseEntity.ok("Deleted");
         } catch (CategoryNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -49,6 +49,20 @@ public class CategoryController {
     public ResponseEntity<?> createCategory(@RequestParam String name) {
         try {
             return ResponseEntity.ok(categoryService.create(name));
+        } catch (CategoryExistsException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping(value = "categories/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestParam String name) {
+        try {
+            categoryService.update(id, name);
+            return ResponseEntity.ok(true);
+        } catch (CategoryNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         } catch (CategoryExistsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

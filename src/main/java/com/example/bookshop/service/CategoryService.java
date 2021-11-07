@@ -15,7 +15,7 @@ public interface CategoryService {
 
     Optional<Category> get(Long id) throws CategoryNotFoundException;
 
-    Category update(Category category);
+    Category update(Long id, String name) throws CategoryNotFoundException, CategoryExistsException;
 
     Boolean delete(Long id) throws CategoryNotFoundException;
 }

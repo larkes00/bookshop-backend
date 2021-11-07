@@ -50,8 +50,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Category category) {
-        return categoryRepository.save(category);
+    public Category update(Long id, String name) throws CategoryNotFoundException, CategoryExistsException {
+        Optional<Category> foundCategoryById = categoryRepository.findById(id);
+        if (foundCategoryById.isEmpty()) {
+            throw new CategoryNotFoundException("Category id " + id + " does not exist");
+        }
+        Category foundCategoryByName = categoryRepository.findByName(name);
+        if (foundCategoryByName != null) {
+            throw new CategoryExistsException("Category " + name + " already exists");
+        }
+        Category result = foundCategoryById.get();
+        result.setName(name);
+        return categoryRepository.save(result);
     }
 
     @Override
