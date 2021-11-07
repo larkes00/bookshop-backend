@@ -41,12 +41,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<Category> get(Long id) throws CategoryNotFoundException {
+    public Category get(Long id) throws CategoryNotFoundException {
         Optional<Category> category = categoryRepository.findById(id);
         if (category.isEmpty()) {
             throw new CategoryNotFoundException("Category by id " + id + " not found");
         }
-        return category;
+        return category.get();
     }
 
     @Override

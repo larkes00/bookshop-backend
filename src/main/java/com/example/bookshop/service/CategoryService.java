@@ -6,14 +6,13 @@ import com.example.bookshop.model.Category;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface CategoryService {
     Category create(String name) throws CategoryExistsException;
 
     List<Map<String, String>> list();
 
-    Optional<Category> get(Long id) throws CategoryNotFoundException;
+    Category get(Long id) throws CategoryNotFoundException;
 
     Category update(Long id, String name) throws CategoryNotFoundException, CategoryExistsException;
 
