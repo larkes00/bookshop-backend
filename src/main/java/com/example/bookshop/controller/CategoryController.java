@@ -2,6 +2,7 @@ package com.example.bookshop.controller;
 
 import com.example.bookshop.exception.CategoryExistsException;
 import com.example.bookshop.exception.CategoryNotFoundException;
+import com.example.bookshop.model.Category;
 import com.example.bookshop.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +47,9 @@ public class CategoryController {
     }
 
     @PostMapping(value = "categories/")
-    public ResponseEntity<?> createCategory(@RequestParam String name) {
+    public ResponseEntity<?> createCategory(@RequestBody Category category) {
         try {
-            return ResponseEntity.ok(categoryService.create(name));
+            return ResponseEntity.ok(categoryService.create(category));
         } catch (CategoryExistsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -57,9 +58,9 @@ public class CategoryController {
     }
 
     @PutMapping(value = "categories/{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestParam String name) {
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         try {
-            categoryService.update(id, name);
+            categoryService.update(id, category);
             return ResponseEntity.ok(true);
         } catch (CategoryNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());

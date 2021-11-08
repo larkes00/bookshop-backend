@@ -18,12 +18,10 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Category create(String name) throws CategoryExistsException {
-        if (categoryRepository.findByName(name).isPresent()) {
-            throw new CategoryExistsException("Category " + name + " already exist");
+    public Category create(Category category) throws CategoryExistsException {
+        if (categoryRepository.findByName(category.getName()).isPresent()) {
+            throw new CategoryExistsException("Category " + category.getName() + " already exist");
         }
-        Category category = new Category();
-        category.setName(name);
         return categoryRepository.save(category);
     }
 
@@ -52,17 +50,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Long id, String name) throws CategoryNotFoundException, CategoryExistsException {
+    public Category update(Long id, Category category) throws CategoryNotFoundException, CategoryExistsException {
         Optional<Category> foundCategoryById = categoryRepository.findById(id);
         if (foundCategoryById.isEmpty()) {
             throw new CategoryNotFoundException("Category id " + id + " does not exist");
         }
-        Optional<Category> foundCategoryByName = categoryRepository.findByName(name);
+        Optional<Category> foundCategoryByName = categoryRepository.findByName(category.getName());
         if (foundCategoryByName.isPresent()) {
-            throw new CategoryExistsException("Category " + name + " already exists");
+            throw new CategoryExistsException("Category " + category.getName() + " already exists");
         }
         Category result = foundCategoryById.get();
-        result.setName(name);
+        result.setName(category.getName());
         return categoryRepository.save(result);
     }
 
@@ -70,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Boolean delete(Long id) throws CategoryNotFoundException {
         Optional<Category> category = categoryRepository.findById(id);
         if (category.isEmpty()) {
-            throw new CategoryNotFoundException("Comment by id " + id + " not found");
+            throw new CategoryNotFoundException("Category by id " + id + " not found");
         }
         categoryRepository.delete(category.get());
         return true;
