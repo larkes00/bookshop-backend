@@ -22,7 +22,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonAlias("user_id")
     private long userId;
 
     @Column

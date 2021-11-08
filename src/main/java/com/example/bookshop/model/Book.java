@@ -22,7 +22,6 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonAlias("id")
     private long bookId;
 
     @Column(nullable = false)

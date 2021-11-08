@@ -21,7 +21,6 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonAlias("id")
     private long commentId;
 
     @Column(nullable = false)

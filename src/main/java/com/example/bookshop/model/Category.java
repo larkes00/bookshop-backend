@@ -20,7 +20,6 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonAlias("id")
     private long categoryId;
 
     @Column(unique = true, nullable = false)

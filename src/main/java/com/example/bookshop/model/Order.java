@@ -22,7 +22,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonAlias("id")
     private long orderId;
 
     @Column(nullable = false)
