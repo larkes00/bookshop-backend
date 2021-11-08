@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     @Autowired
     private CategoryServiceImpl categoryService;
 
-    @GetMapping("categories/")
-    public ResponseEntity<?> getAllCategory() {
+    @GetMapping("/")
+    public ResponseEntity<?> getAllCategories() {
         return ResponseEntity.ok(
                 categoryService.list()
         );
     }
 
-    @GetMapping("categories/{id}/books/")
-    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+    @GetMapping("/{id}/books/")
+    public ResponseEntity<?> getBooksByCategoryId(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(categoryService.get(id));
         } catch (CategoryNotFoundException e) {
@@ -34,7 +34,7 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("categories/{id}/")
+    @DeleteMapping("/{id}/")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         try {
             categoryService.delete(id);
@@ -46,7 +46,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping(value = "categories/")
+    @PostMapping(value = "/")
     public ResponseEntity<?> createCategory(@RequestBody Category category) {
         try {
             return ResponseEntity.ok(categoryService.create(category));
@@ -57,7 +57,7 @@ public class CategoryController {
         }
     }
 
-    @PutMapping(value = "categories/{id}")
+    @PutMapping(value = "/{id}/")
     public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         try {
             categoryService.update(id, category);

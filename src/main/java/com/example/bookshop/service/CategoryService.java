@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface CategoryService {
-    Category create(String name) throws CategoryExistsException;
+    Category create(Category category) throws CategoryExistsException;
 
     List<Map<String, String>> list();
 
     Category get(Long id) throws CategoryNotFoundException;
 
-    Category update(Long id, String name) throws CategoryNotFoundException, CategoryExistsException;
+    Category update(Long id, Category category) throws CategoryNotFoundException, CategoryExistsException;
 
     Boolean delete(Long id) throws CategoryNotFoundException;
 }
