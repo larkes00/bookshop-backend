@@ -2,9 +2,7 @@ package com.example.bookshop.service.impl;
 
 import com.example.bookshop.exception.CategoryExistsException;
 import com.example.bookshop.exception.CategoryNotFoundException;
-import com.example.bookshop.exception.CommentNotFoundException;
 import com.example.bookshop.model.Category;
-import com.example.bookshop.model.Comment;
 import com.example.bookshop.repository.CategoryRepository;
 import com.example.bookshop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +16,12 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Category create(Category category) throws CategoryExistsException {
+    public Boolean create(Category category) throws CategoryExistsException {
         if (categoryRepository.findByName(category.getName()).isPresent()) {
             throw new CategoryExistsException("Category " + category.getName() + " already exist");
         }
-        return categoryRepository.save(category);
+        categoryRepository.save(category);
+        return true;
     }
 
     @Override
@@ -50,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Long id, Category category) throws CategoryNotFoundException, CategoryExistsException {
+    public Boolean update(Long id, Category category) throws CategoryNotFoundException, CategoryExistsException {
         Optional<Category> foundCategoryById = categoryRepository.findById(id);
         if (foundCategoryById.isEmpty()) {
             throw new CategoryNotFoundException("Category id " + id + " does not exist");
@@ -61,7 +60,8 @@ public class CategoryServiceImpl implements CategoryService {
         }
         Category result = foundCategoryById.get();
         result.setName(category.getName());
-        return categoryRepository.save(result);
+        categoryRepository.save(result);
+        return true;
     }
 
     @Override

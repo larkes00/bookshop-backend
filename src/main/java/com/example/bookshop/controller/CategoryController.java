@@ -47,7 +47,7 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createCategory(@RequestBody Category category) {
+    @ResponseBody public ResponseEntity<?> createCategory(@RequestBody Category category) {
         try {
             return ResponseEntity.ok(categoryService.create(category));
         } catch (CategoryExistsException e) {
@@ -60,8 +60,7 @@ public class CategoryController {
     @PutMapping(value = "/{id}/")
     public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         try {
-            categoryService.update(id, category);
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(categoryService.update(id, category));
         } catch (CategoryNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         } catch (CategoryExistsException e) {
