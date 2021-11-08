@@ -38,8 +38,8 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Comment> comment;
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> order;
+    private List<Order> orders;
 }

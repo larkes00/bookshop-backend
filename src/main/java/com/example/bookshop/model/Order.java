@@ -27,7 +27,7 @@ public class Order {
     private String deliveryAddress;
 
     @ManyToMany
-    private List<Book> book;
+    private List<Book> books;
 
     @ManyToOne
     @JsonIgnore

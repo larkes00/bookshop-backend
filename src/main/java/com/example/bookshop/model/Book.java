@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -39,7 +40,7 @@ public class Book {
     @JsonIgnore
     private Category category;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "book")
     @JsonIgnore
-    private Comment comment;
+    private List<Comment> books;
 }

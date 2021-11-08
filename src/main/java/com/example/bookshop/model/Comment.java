@@ -1,5 +1,6 @@
 package com.example.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,8 +24,9 @@ public class Comment {
     @Column(nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "comment")
-    private List<Book> category;
+    @ManyToOne
+    @JsonBackReference
+    private Book book;
 
     @ManyToOne
     @JsonIgnore
