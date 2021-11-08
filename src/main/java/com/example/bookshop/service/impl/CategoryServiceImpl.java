@@ -2,7 +2,9 @@ package com.example.bookshop.service.impl;
 
 import com.example.bookshop.exception.CategoryExistsException;
 import com.example.bookshop.exception.CategoryNotFoundException;
+import com.example.bookshop.exception.CommentNotFoundException;
 import com.example.bookshop.model.Category;
+import com.example.bookshop.model.Comment;
 import com.example.bookshop.repository.CategoryRepository;
 import com.example.bookshop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category create(String name) throws CategoryExistsException {
-        if (categoryRepository.findByName(name) != null) {
+        if (categoryRepository.findByName(name).isPresent()) {
             throw new CategoryExistsException("Category " + name + " already exist");
         }
         Category category = new Category();
@@ -55,8 +57,8 @@ public class CategoryServiceImpl implements CategoryService {
         if (foundCategoryById.isEmpty()) {
             throw new CategoryNotFoundException("Category id " + id + " does not exist");
         }
-        Category foundCategoryByName = categoryRepository.findByName(name);
-        if (foundCategoryByName != null) {
+        Optional<Category> foundCategoryByName = categoryRepository.findByName(name);
+        if (foundCategoryByName.isPresent()) {
             throw new CategoryExistsException("Category " + name + " already exists");
         }
         Category result = foundCategoryById.get();
@@ -66,11 +68,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Boolean delete(Long id) throws CategoryNotFoundException {
-        try {
-            categoryRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new CategoryNotFoundException("Category by id " + id + " not found");
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isEmpty()) {
+            throw new CategoryNotFoundException("Comment by id " + id + " not found");
         }
+        categoryRepository.delete(category.get());
         return true;
     }
 }
