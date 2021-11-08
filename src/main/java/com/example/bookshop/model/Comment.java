@@ -1,5 +1,6 @@
 package com.example.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
@@ -15,11 +16,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "comments")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(scope = Comment.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "commentId")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id")
+    @JsonAlias("id")
+    private long commentId;
 
     @Column(nullable = false)
     private String content;

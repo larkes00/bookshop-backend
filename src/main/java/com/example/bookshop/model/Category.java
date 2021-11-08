@@ -15,11 +15,13 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "categories")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(scope = Category.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "categoryId")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id")
+    @JsonAlias("id")
+    private long categoryId;
 
     @Column(unique = true, nullable = false)
     private String name;

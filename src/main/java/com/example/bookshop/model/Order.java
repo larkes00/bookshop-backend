@@ -1,5 +1,6 @@
 package com.example.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
@@ -16,11 +17,13 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "orders")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(scope = Order.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id")
+    @JsonAlias("id")
+    private long orderId;
 
     @Column(nullable = false)
     private String status;
