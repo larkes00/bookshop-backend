@@ -1,6 +1,5 @@
 package com.example.bookshop.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,10 +38,8 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
     private List<Comment> comment;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
     private List<Order> order;
 }

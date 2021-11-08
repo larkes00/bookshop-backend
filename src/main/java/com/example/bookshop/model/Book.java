@@ -1,6 +1,6 @@
 package com.example.bookshop.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,10 +36,10 @@ public class Book {
     private String image;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     private Category category;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     private Comment comment;
 }
