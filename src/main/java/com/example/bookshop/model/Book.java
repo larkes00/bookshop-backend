@@ -1,6 +1,6 @@
 package com.example.bookshop.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "books")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,10 +38,8 @@ public class Book {
     private String image;
 
     @ManyToOne
-    @JsonIgnore
     private Category category;
 
     @OneToMany(mappedBy = "book")
-    @JsonIgnore
-    private List<Comment> books;
+    private List<Comment> comments;
 }
