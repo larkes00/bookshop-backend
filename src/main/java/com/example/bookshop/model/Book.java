@@ -42,6 +42,6 @@ public class Book {
     @ManyToOne
     private Category category;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Comment> comments;
 }
