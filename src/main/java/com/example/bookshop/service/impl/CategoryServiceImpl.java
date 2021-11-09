@@ -52,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Boolean update(Long id, Category category) throws CategoryNotFoundException, CategoryExistsException {
         Optional<Category> foundCategoryById = categoryRepository.findById(id);
         if (foundCategoryById.isEmpty()) {
-            throw new CategoryNotFoundException("Category id " + id + " does not exist");
+            throw new CategoryNotFoundException("Category id " + id + " not found");
         }
         Optional<Category> foundCategoryByName = categoryRepository.findByName(category.getName());
         if (foundCategoryByName.isPresent()) {

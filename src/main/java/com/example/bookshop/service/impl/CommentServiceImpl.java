@@ -30,9 +30,9 @@ public class CommentServiceImpl implements CommentService {
         Optional<Book> book = bookRepository.findById(comment.getBook().getBookId());
         Optional<User> user = userRepository.findById(comment.getUser().getUserId());
         if (book.isEmpty()) {
-            throw new BookNotFoundException("Book with id " + comment.getBook().getBookId() + " do not exists");
+            throw new BookNotFoundException("Book by id " + comment.getBook().getBookId() + " not found");
         } else if (user.isEmpty()) {
-            throw new UserNotFoundException("User with id " + comment.getUser().getUserId() + " do not exists");
+            throw new UserNotFoundException("User by id " + comment.getUser().getUserId() + " not found");
         }
         commentRepository.save(comment);
         return true;
@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
     public Boolean update(Long id, Comment comment) throws CommentNotFoundException {
         Optional<Comment> foundCommentById = commentRepository.findById(id);
         if (foundCommentById.isEmpty()) {
-            throw new CommentNotFoundException("Comment id " + id + " does not exist");
+            throw new CommentNotFoundException("Comment by id " + id + " not found");
         }
         Comment result = foundCommentById.get();
         result.setContent(comment.getContent());
