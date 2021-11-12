@@ -3,6 +3,7 @@ package com.example.bookshop.controller;
 import com.example.bookshop.exception.CategoryExistsException;
 import com.example.bookshop.exception.CategoryNotFoundException;
 import com.example.bookshop.model.Category;
+import com.example.bookshop.service.CategoryService;
 import com.example.bookshop.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
 
     @Autowired
-    private CategoryServiceImpl categoryService;
+    private CategoryService categoryService;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllCategories() {

@@ -4,6 +4,7 @@ import com.example.bookshop.exception.BookNotFoundException;
 import com.example.bookshop.exception.CommentNotFoundException;
 import com.example.bookshop.exception.UserNotFoundException;
 import com.example.bookshop.model.Comment;
+import com.example.bookshop.service.CommentService;
 import com.example.bookshop.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/comments")
 public class CommentController {
     @Autowired
-    private CommentServiceImpl commentService;
+    private CommentService commentService;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllComments() {
