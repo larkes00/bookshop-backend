@@ -1,6 +1,5 @@
 package com.example.bookshop.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
@@ -9,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -24,12 +25,17 @@ public class User {
     @Column(name = "id")
     private long userId;
 
-    @Column
-    private String surname;
+    @Column(name = "user_name", unique = true, nullable = false)
+    private String userName;
 
-    @Column
-    private String name;
+    @Column(nullable = false)
+    private String password;
 
+    @Column(name = "second_name")
+    private String secondName;
+
+    @Column(name = "first_name")
+    private String firstName;
     @Column
     private String patronymic;
 
@@ -39,12 +45,12 @@ public class User {
     @Column(name = "email_address", nullable = false, unique = true, length = 100)
     private String emailAddress;
 
-    @Column(nullable = false)
-    private String password;
-
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 }
