@@ -25,18 +25,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Map<String, String>> list() {
-        List<Map<String, String>> result = new ArrayList<>();
-        Collection<String> collection = categoryRepository.getAllCategoriesNames();
-        for (String element: collection) {
-            String[] temp = element.split(",");
-            Map<String, String> map = new HashMap<>();
-            map.put("id", temp[0]);
-            map.put("name", temp[1]);
-            result.add(map);
-
-        }
-        return result;
+    public List<Category> list() {
+        List<Category> categories = categoryRepository.findAll();
+        categories.forEach(category -> category.setBooks(null));
+        return categoryRepository.findAll();
     }
 
     @Override
@@ -45,7 +37,9 @@ public class CategoryServiceImpl implements CategoryService {
         if (category.isEmpty()) {
             throw new CategoryNotFoundException("Category by id " + id + " not found");
         }
-        return category.get();
+        Category resultCategory = category.get();
+        resultCategory.getBooks().forEach(book -> book.setComments(null));
+        return resultCategory;
     }
 
     @Override
