@@ -4,14 +4,11 @@ import com.example.bookshop.exception.BookExistsException;
 import com.example.bookshop.exception.BookNotFoundException;
 import com.example.bookshop.exception.CategoryNotFoundException;
 import com.example.bookshop.model.Book;
-import com.example.bookshop.repository.BookRepository;
 import com.example.bookshop.service.BookService;
-import com.example.bookshop.service.impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
