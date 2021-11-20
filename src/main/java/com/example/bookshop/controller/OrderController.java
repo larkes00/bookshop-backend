@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("*")
 @RequestMapping("/api/v1/orders")
 public class OrderController {
 }
