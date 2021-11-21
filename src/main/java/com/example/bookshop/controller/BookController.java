@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/books")
-@CrossOrigin("*")
 public class BookController {
     @Autowired
     private BookService bookService;
