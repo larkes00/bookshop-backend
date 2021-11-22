@@ -5,6 +5,7 @@ import com.example.bookshop.exception.BookNotFoundException;
 import com.example.bookshop.exception.CategoryNotFoundException;
 import com.example.bookshop.model.Book;
 import com.example.bookshop.service.BookService;
+import com.example.bookshop.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     @Autowired
     private BookService bookService;
+    @Autowired
+    private CommentService commentService;
 
 
     @GetMapping("/{id}/")
@@ -54,6 +57,18 @@ public class BookController {
             return ResponseEntity.ok(bookService.delete(id));
         } catch (BookNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+    @GetMapping(value = "/{id}/comments/")
+    public ResponseEntity<?> getBookComments(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(commentService.getBookComments(id));
+        } catch (BookNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

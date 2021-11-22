@@ -5,6 +5,7 @@ import com.example.bookshop.exception.CommentNotFoundException;
 import com.example.bookshop.exception.UserNotFoundException;
 import com.example.bookshop.model.Comment;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface CommentService {
@@ -15,4 +16,6 @@ public interface CommentService {
     Boolean update(Long id, Comment comment) throws CommentNotFoundException, BookNotFoundException, UserNotFoundException;
 
     Boolean delete(Long id) throws CommentNotFoundException;
+
+    List<HashMap<String, String>> getBookComments(Long id) throws BookNotFoundException;
 }

@@ -13,6 +13,8 @@ import com.example.bookshop.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,5 +65,23 @@ public class CommentServiceImpl implements CommentService {
         }
         commentRepository.delete(comment.get());
         return true;
+    }
+
+    @Override
+    public List<HashMap<String, String>> getBookComments(Long id) throws BookNotFoundException {
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isEmpty()) {
+            throw new BookNotFoundException("Book with id " + id + " not found");
+        }
+        List<HashMap<String, String>> response = new LinkedList<>();
+        List<Comment> comments = commentRepository.findByBook(book.get());
+        comments.forEach(comment -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("commentId", String.valueOf(comment.getCommentId()));
+            map.put("content", comment.getContent());
+            map.put("userName", comment.getUser().getUserName());
+            response.add(map);
+        });
+        return response;
     }
 }
