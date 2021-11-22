@@ -37,18 +37,27 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+    @GetMapping("/users/{username}/")
+    public ResponseEntity<?> getUserByUserName(@PathVariable String username) {
+        try {
+            return ResponseEntity.ok(userService.getUser(username));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @PostMapping("/users/")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         return ResponseEntity.ok().body(userService.saveUser(user));
     }
 
     @PostMapping("/roles/")
-    public ResponseEntity<Role> saveUser(@RequestBody Role role) {
+    public ResponseEntity<Role> saveRoles(@RequestBody Role role) {
         return ResponseEntity.ok().body(userService.saveRole(role));
     }
 
     @PostMapping("/users/roles/")
-    public ResponseEntity<?> saveUser(@RequestBody RoleToUserForm form) {
+    public ResponseEntity<?> saveRoleToUser(@RequestBody RoleToUserForm form) {
         userService.addRoleToUser(form.getUserName(), form.getRoleName());
         return ResponseEntity.ok().build();
     }
