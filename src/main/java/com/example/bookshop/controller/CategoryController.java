@@ -25,7 +25,7 @@ public class CategoryController {
     @GetMapping("/{id}/books/")
     public ResponseEntity<?> getBooksByCategoryId(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(categoryService.get(id));
+            return ResponseEntity.ok(categoryService.getbooksByCategory(id));
         } catch (CategoryNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
