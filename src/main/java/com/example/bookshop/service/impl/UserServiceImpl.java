@@ -58,15 +58,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Map<String, String> getUser(String username) {
+    public User getUser(String username) {
         User user = userRepository.findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User with username " + username + " not found");
         }
-        Map<String, String> response = new HashMap<>();
-        response.put("id", String.valueOf(user.getUserId()));
-        response.put("username", user.getUserName());
-        return response;
+        return userRepository.findByUserName(username);
     }
 
     @Override

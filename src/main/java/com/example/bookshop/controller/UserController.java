@@ -40,7 +40,11 @@ public class UserController {
     @GetMapping("/users/{username}/")
     public ResponseEntity<?> getUserByUserName(@PathVariable String username) {
         try {
-            return ResponseEntity.ok(userService.getUser(username));
+            User user = userService.getUser(username);
+            Map<String, String> response = new HashMap<>();
+            response.put("id", String.valueOf(user.getUserId()));
+            response.put("username", user.getUserName());
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
