@@ -5,13 +5,14 @@ import com.example.bookshop.exception.CategoryNotFoundException;
 import com.example.bookshop.model.Category;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryService {
     Boolean create(Category category) throws CategoryExistsException;
 
     List<Category> list();
 
-    Category get(Long id) throws CategoryNotFoundException;
+    List<Map<String, String>> getbooksByCategory(Long id) throws CategoryNotFoundException;
 
     Boolean update(Long id, Category category) throws CategoryNotFoundException, CategoryExistsException;
 
