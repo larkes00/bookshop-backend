@@ -14,9 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -65,9 +63,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User with username " + username + " not found");
         }
-        user.setOrders(null);
-        user.setComments(null);
-        user.setPassword(null);
+        Map<String, String> response = new HashMap<>();
+        response.put("id", String.valueOf(user.getUserId()));
+        response.put("username", user.getUserName());
         return user;
     }
 
