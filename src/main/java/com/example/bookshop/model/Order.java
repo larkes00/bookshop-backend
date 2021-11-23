@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,11 +28,11 @@ public class Order {
     @Column(nullable = false)
     private String status;
 
-    @Column(name = "delivery_address", nullable = false)
+    @Column(name = "delivery_address")
     private String deliveryAddress;
 
     @ManyToMany
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
     @ManyToOne
     private User user;
