@@ -11,7 +11,7 @@ import java.util.Map;
 public interface CommentService {
     Boolean create(Comment comment) throws BookNotFoundException, UserNotFoundException;
 
-    List<Comment> list();
+    List<Map<String, String>> list();
 
     Boolean update(Long id, Comment comment) throws CommentNotFoundException, BookNotFoundException, UserNotFoundException;
 

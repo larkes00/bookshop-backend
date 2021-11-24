@@ -38,8 +38,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> list() {
-        return commentRepository.findAll();
+    public List<Map<String, String>> list() {
+        List<Comment> list = commentRepository.findAll();
+        List<Map<String, String>> result = new ArrayList<>();
+        for(Comment comment: list) {
+            Map<String, String> map = new HashMap<>();
+            map.put("id", String.valueOf(comment.getCommentId()));
+            map.put("content", comment.getContent());
+            map.put("userId", String.valueOf(comment.getUser().getUserId()));
+            map.put("bookId", String.valueOf(comment.getBook().getBookId()));
+            result.add(map);
+        }
+        return result;
     }
 
     @Override
