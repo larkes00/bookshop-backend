@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
             map.put("deliveryAddress", order.getDeliveryAddress());
             List<String> books = new ArrayList<>();
             for (Book book : order.getBooks()) {
-                books.add(book.getName());
+                books.add(String.valueOf(book.getBookId()));
             }
             map.put("books", String.valueOf(books));
             result.add(map);
