@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     private BookRepository bookRepository;
 
     @Override
-    public List<Order> list() {
+    public List<Map<String, String>> list() {
         List<Order> orders = orderRepository.findAll();
         List<Map<String, String>> result = new ArrayList<>();
         for (Order order : orders) {
@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
             map.put("books", String.valueOf(books));
             result.add(map);
         }
-        return orderRepository.findAll();
+        return result;
     }
 
     @Override

@@ -4,13 +4,12 @@ import com.example.bookshop.exception.BookNotFoundException;
 import com.example.bookshop.exception.OrderNotFoundException;
 import com.example.bookshop.exception.UserNotFoundException;
 import com.example.bookshop.model.Book;
-import com.example.bookshop.model.Order;
 
 import java.util.List;
 import java.util.Map;
 
 public interface OrderService {
-    List<Order> list();
+    List<Map<String, String>> list();
 
     boolean addItem(Long userId, Long bookId) throws UserNotFoundException, BookNotFoundException;
 
