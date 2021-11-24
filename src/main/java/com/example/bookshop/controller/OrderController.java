@@ -43,7 +43,7 @@ public class OrderController {
     @GetMapping("/user/{id}/")
     public ResponseEntity<?> getUserOrders(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(orderService.get(id));
+            return ResponseEntity.ok(orderService.getList(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

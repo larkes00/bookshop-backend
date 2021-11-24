@@ -28,16 +28,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> list() {
-        List<Order> order = orderRepository.findAll();
-        order.removeIf(ord -> ord.getStatus().equals("CREATED"));
-        for (Order ord : order){
-            ord.setUser(null);
-            for (Book book : ord.getBooks()) {
-                book.setCategory(null);
-                book.setComments(null);
-            }
-        }
-        return order;
+        return orderRepository.findAll();
     }
 
     @Override
@@ -65,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order get(Long id) throws OrderNotFoundException, UserNotFoundException {
+    public Map<String, List<Book>> get(Long id) throws OrderNotFoundException, UserNotFoundException {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
             throw new UserNotFoundException("User with id " + id + " not found");
@@ -74,16 +65,39 @@ public class OrderServiceImpl implements OrderService {
         if (order == null) {
             throw new OrderNotFoundException("User don't have order");
         }
-        order.setUser(null);
+        Map<String, List<Book>> map = new HashMap<>();
+        List<Book> tempBook = new ArrayList<>();
         for (Book book : order.getBooks()) {
-            book.setCategory(null);
-            book.setComments(null);
+            Book temp = new Book();
+            temp.setName(book.getName());
+            temp.setBookId(book.getBookId());
+            temp.setImage(book.getImage());
+            temp.setPrice(book.getPrice());
+            tempBook.add(temp);
         }
-        return order;
+        map.put("books", tempBook);
+        return map;
     }
 
-    @Override
-    public List<Order> getAll(Long id) {
-        return null;
+    public List<Map<String, String>> getList(Long id) throws UserNotFoundException, OrderNotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User with id " + id + " not found");
+        }
+        List<Order> orders = orderRepository.getOrderByUser(user.get());
+        if (orders.isEmpty()) {
+            throw new OrderNotFoundException("User don't have order");
+        }
+        List<Map<String, String>> result = new ArrayList<>();
+        for (Order order : orders) {
+            if (!order.getStatus().equals("CREATED")) {
+                Map<String, String> map = new HashMap<>();
+                map.put("orderId", String.valueOf(order.getOrderId()));
+                map.put("status", order.getStatus());
+                map.put("deliveryAddress", order.getDeliveryAddress());
+                result.add(map);
+            }
+        }
+        return result;
     }
 }
