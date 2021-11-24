@@ -29,10 +29,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> list() {
+    public List<Map<String, String>> list() {
         List<Category> categories = categoryRepository.findAll();
-        categories.forEach(category -> category.setBooks(null));
-        return categoryRepository.findAll();
+        List<Map<String, String>> result= new ArrayList<>();
+        for (Category category: categories) {
+            Map<String, String> map = new HashMap<>();
+            map.put("categoryId", String.valueOf(category.getCategoryId()));
+            map.put("name", category.getName());
+            result.add(map);
+        }
+        return result;
     }
 
     public List<Map<String, String>> getbooksByCategory(Long id) throws CategoryNotFoundException {

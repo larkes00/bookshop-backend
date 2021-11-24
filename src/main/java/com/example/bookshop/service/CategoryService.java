@@ -10,7 +10,7 @@ import java.util.Map;
 public interface CategoryService {
     Boolean create(Category category) throws CategoryExistsException;
 
-    List<Category> list();
+    List<Map<String, String>> list();
 
     List<Map<String, String>> getbooksByCategory(Long id) throws CategoryNotFoundException;
 
