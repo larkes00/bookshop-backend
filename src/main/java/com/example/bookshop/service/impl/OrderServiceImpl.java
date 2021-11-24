@@ -28,6 +28,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> list() {
+        List<Order> orders = orderRepository.findAll();
+        List<Map<String, String>> result = new ArrayList<>();
+        for (Order order : orders) {
+            Map<String, String> map = new HashMap<>();
+            map.put("orderId", String.valueOf(order.getOrderId()));
+            map.put("status", order.getStatus());
+            map.put("deliveryAddress", order.getDeliveryAddress());
+            List<String> books = new ArrayList<>();
+            for (Book book : order.getBooks()) {
+                books.add(book.getName());
+            }
+            map.put("books", String.valueOf(books));
+            result.add(map);
+        }
         return orderRepository.findAll();
     }
 

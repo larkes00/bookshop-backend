@@ -67,7 +67,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<Map<String, String>> getUsers() {
+        List<User> list = userRepository.findAll();
+        List<Map<String, String>> result = new ArrayList<>();
+        if (!list.isEmpty()) {
+            for(User user : list) {
+                Map<String, String> map = new HashMap<>();
+                map.put("userId", String.valueOf(user.getUserId()));
+                map.put("username", user.getUserName());
+                map.put("email", user.getEmailAddress());
+                map.put("phoneNumber", user.getPhoneNumber());
+                result.add(map);
+            }
+            return result;
+        }
+        return null;
     }
 }

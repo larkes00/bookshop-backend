@@ -4,6 +4,7 @@ import com.example.bookshop.model.Role;
 import com.example.bookshop.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     User saveUser(User user);
@@ -14,5 +15,5 @@ public interface UserService {
 
     User getUser(String username);
 
-    List<User> getUsers();
+    List<Map<String, String>> getUsers();
 }
