@@ -46,6 +46,11 @@ public class UserController {
             Map<String, String> response = new HashMap<>();
             response.put("id", String.valueOf(user.getUserId()));
             response.put("username", user.getUserName());
+            response.put("email", user.getEmailAddress());
+            response.put("firstName", user.getFirstName());
+            response.put("secondName", user.getSecondName());
+            response.put("patronymic", user.getPatronymic());
+            response.put("phoneNumber", user.getPhoneNumber());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
