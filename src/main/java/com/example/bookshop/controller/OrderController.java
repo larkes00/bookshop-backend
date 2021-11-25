@@ -1,5 +1,7 @@
 package com.example.bookshop.controller;
 
+import com.example.bookshop.exception.CommentNotFoundException;
+import com.example.bookshop.exception.OrderNotFoundException;
 import com.example.bookshop.service.OrderService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,17 @@ public class OrderController {
     public ResponseEntity<?> getUserOrders(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(orderService.getList(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/orders/{id}/")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(orderService.delete(id));
+        } catch (OrderNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

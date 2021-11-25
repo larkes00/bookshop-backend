@@ -1,5 +1,6 @@
 package com.example.bookshop.service.impl;
 
+import com.example.bookshop.exception.UserNotFoundException;
 import com.example.bookshop.model.Role;
 import com.example.bookshop.model.User;
 import com.example.bookshop.repository.RoleRepository;
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<User> list = userRepository.findAll();
         List<Map<String, String>> result = new ArrayList<>();
         if (!list.isEmpty()) {
-            for(User user : list) {
+            for (User user : list) {
                 Map<String, String> map = new HashMap<>();
                 map.put("userId", String.valueOf(user.getUserId()));
                 map.put("username", user.getUserName());
@@ -82,5 +83,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return result;
         }
         return null;
+    }
+
+    @Override
+    public Boolean delete(Long id) throws UserNotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User with id " + id + " not found");
+        }
+        userRepository.delete(user.get());
+        return true;
     }
 }

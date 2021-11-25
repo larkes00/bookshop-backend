@@ -1,5 +1,6 @@
 package com.example.bookshop.service;
 
+import com.example.bookshop.exception.UserNotFoundException;
 import com.example.bookshop.model.Role;
 import com.example.bookshop.model.User;
 
@@ -16,4 +17,6 @@ public interface UserService {
     User getUser(String username);
 
     List<Map<String, String>> getUsers();
+
+    Boolean delete(Long id) throws UserNotFoundException;
 }

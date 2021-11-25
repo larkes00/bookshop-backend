@@ -16,4 +16,6 @@ public interface OrderService {
     Map<String, List<Book>> get(Long id) throws OrderNotFoundException, UserNotFoundException;
 
     List<Map<String, String>> getList(Long id) throws UserNotFoundException, OrderNotFoundException;
+
+    Boolean delete(Long id) throws OrderNotFoundException;
 }

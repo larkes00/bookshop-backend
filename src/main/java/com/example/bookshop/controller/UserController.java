@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.bookshop.exception.OrderNotFoundException;
+import com.example.bookshop.exception.UserNotFoundException;
 import com.example.bookshop.model.Role;
 import com.example.bookshop.model.User;
 import com.example.bookshop.service.UserService;
@@ -101,6 +103,16 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/users/{id}/")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(userService.delete(id));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
 
 @Data
