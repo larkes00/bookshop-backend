@@ -51,7 +51,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/orders/{id}/")
+    @DeleteMapping("/{id}/")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(orderService.delete(id));
