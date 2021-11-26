@@ -47,25 +47,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/api/v1/login/**", "/api/v1/users/", "/api/v1/token/refresh/**")
-                .permitAll();
-        http.authorizeRequests()
+                .permitAll()
+                .and()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v1/comments/**", "/api/v1/orders/**")
-                .hasAnyAuthority("USER");
-        http.authorizeRequests()
+                .hasAnyAuthority("USER")
+                .and()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.DELETE, "/api/v1/orders/**")
-                .hasAnyAuthority("USER", "ADMIN");
-        http.authorizeRequests()
+                .hasAnyAuthority("USER")
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.DELETE, "/api/v1/**")
+                .hasAnyAuthority("ADMIN")
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/v1/**")
+                .hasAnyAuthority("ADMIN")
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.PUT, "/api/v1/**")
+                .hasAnyAuthority("ADMIN")
+                .and()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/**")
                 .permitAll();
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.DELETE, "/api/v1/**")
-                .hasAnyAuthority("ADMIN");
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/**")
-                .hasAnyAuthority("ADMIN");
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.PUT, "/api/v1/**")
-                .hasAnyAuthority("ADMIN");
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
