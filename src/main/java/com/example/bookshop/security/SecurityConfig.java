@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/v1/comments/**", "/api/v1/orders/**")
                 .hasAnyAuthority("USER");
         http.authorizeRequests()
-                .antMatchers(HttpMethod.DELETE, "/api/v1/orders/{orderId}/items/{itemId}/")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/orders/**")
                 .hasAnyAuthority("USER");
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/**")
