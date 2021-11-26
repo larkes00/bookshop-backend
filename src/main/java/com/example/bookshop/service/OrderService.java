@@ -19,4 +19,6 @@ public interface OrderService {
     Boolean delete(Long id) throws OrderNotFoundException;
 
     Boolean deleteItem(Long orderId, Long itemId) throws OrderNotFoundException;
+
+    Boolean changeStatus(Long id, String deliveryAddress) throws OrderNotFoundException;
 }

@@ -70,6 +70,14 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PatchMapping("/{id}/")
+    public ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestParam String deliveryAddress) {
+        try {
+            return ResponseEntity.ok(orderService.changeStatus(id, deliveryAddress));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
 
 @Data

@@ -140,4 +140,15 @@ public class OrderServiceImpl implements OrderService {
         books.removeIf(book -> book.getBookId() == itemId);
         return true;
     }
+
+    @Override
+    public Boolean changeStatus(Long id, String deliveryAddress) throws OrderNotFoundException {
+        Optional<Order> foundOrder = orderRepository.findById(id);
+        if (foundOrder.isEmpty()) {
+            throw new OrderNotFoundException("Order with id " + id + " not found");
+        }
+        Order order = foundOrder.get();
+        order.setDeliveryAddress(deliveryAddress);
+        return true;
+    }
 }
