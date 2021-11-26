@@ -149,6 +149,9 @@ public class OrderServiceImpl implements OrderService {
         }
         Order order = foundOrder.get();
         order.setDeliveryAddress(deliveryAddress);
+        if (order.getStatus().equals("CREATED")) {
+            order.setStatus("Обрабатывается");
+        }
         return true;
     }
 }
