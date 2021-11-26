@@ -55,16 +55,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/api/v1/orders/**")
                 .hasAnyAuthority("USER");
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/**")
+                .antMatchers(HttpMethod.GET, "/api/v1/**")
                 .permitAll();
         http.authorizeRequests()
-                .antMatchers(HttpMethod.DELETE, "/**")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/**")
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/**")
+                .antMatchers(HttpMethod.POST, "/api/v1/**")
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests()
-                .antMatchers(HttpMethod.PUT, "/**")
+                .antMatchers(HttpMethod.PUT, "/api/v1/**")
                 .hasAnyAuthority("ADMIN");
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
