@@ -18,4 +18,6 @@ public interface OrderService {
     List<Map<String, String>> getList(Long id) throws UserNotFoundException, OrderNotFoundException;
 
     Boolean delete(Long id) throws OrderNotFoundException;
+
+    Boolean deleteItem(Long orderId, Long itemId) throws OrderNotFoundException;
 }

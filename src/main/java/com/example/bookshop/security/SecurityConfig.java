@@ -46,6 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
+                .antMatchers("/api/v1/login/**", "/api/v1/users/", "/api/v1/token/refresh/**")
+                .permitAll();
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/v1/comments/**", "/api/v1/orders/**")
+                .hasAnyAuthority("USER");
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.DELETE, "/api/v1/orders/{id}/items/{id}/")
+                .hasAnyAuthority("USER");
+        http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/**")
                 .permitAll();
         http.authorizeRequests()
@@ -57,12 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.PUT, "/**")
                 .hasAnyAuthority("ADMIN");
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/comments/**", "/api/v1/orders/**")
-                .hasAnyAuthority("USER");
-        http.authorizeRequests()
-                .antMatchers("/api/v1/login/**", "/api/v1/token/refresh/**")
-                .permitAll();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

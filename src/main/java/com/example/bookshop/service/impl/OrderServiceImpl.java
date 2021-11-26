@@ -124,4 +124,15 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.delete(order.get());
         return true;
     }
+
+    @Override
+    public Boolean deleteItem(Long orderId, Long itemId) throws OrderNotFoundException {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isEmpty()) {
+            throw new OrderNotFoundException("Order with id " + orderId + " not found");
+        }
+        List<Book> books = order.get().getBooks();
+        books.removeIf(book -> book.getBookId() == itemId);
+        return true;
+    }
 }

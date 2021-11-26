@@ -61,6 +61,15 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/{orderId}/items/{itemId}/")
+    public ResponseEntity<?> deleteItemFromOrder(@PathVariable Long orderId, @PathVariable Long itemId) {
+        try {
+            return ResponseEntity.ok(orderService.deleteItem(orderId, itemId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
 
 @Data
