@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("USER");
         http.authorizeRequests()
                 .antMatchers(HttpMethod.DELETE, "/api/v1/orders/**")
-                .hasAnyAuthority("USER");
+                .hasAnyAuthority("USER", "ADMIN");
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/**")
                 .permitAll();
