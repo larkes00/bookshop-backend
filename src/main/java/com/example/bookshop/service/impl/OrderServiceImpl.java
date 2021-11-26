@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Map<String, List<Book>> get(Long id) throws OrderNotFoundException, UserNotFoundException {
+    public List<Map<?, ?>> get(Long id) throws OrderNotFoundException, UserNotFoundException {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
             throw new UserNotFoundException("User with id " + id + " not found");
@@ -79,6 +79,7 @@ public class OrderServiceImpl implements OrderService {
         if (order == null) {
             throw new OrderNotFoundException("User don't have order");
         }
+        List<Map<?, ?>> response = new ArrayList<>();
         Map<String, List<Book>> map = new HashMap<>();
         List<Book> tempBook = new ArrayList<>();
         for (Book book : order.getBooks()) {
@@ -90,7 +91,11 @@ public class OrderServiceImpl implements OrderService {
             tempBook.add(temp);
         }
         map.put("books", tempBook);
-        return map;
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("orderId", String.valueOf(order.getOrderId()));
+        response.add(map);
+        response.add(map1);
+        return response;
     }
 
     public List<Map<String, String>> getList(Long id) throws UserNotFoundException, OrderNotFoundException {
