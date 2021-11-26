@@ -46,26 +46,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
-                .antMatchers(
-                        HttpMethod.GET, "/api/v1/categories/**", "/api/v1/books/**", "/api/v1/comments/**")
+                .antMatchers(HttpMethod.GET, "/**")
                 .permitAll();
         http.authorizeRequests()
-                .antMatchers(
-                        HttpMethod.DELETE, "/api/v1/categories/**", "/api/v1/books/**", "/api/v1/comments/**")
+                .antMatchers(HttpMethod.DELETE, "/**")
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests()
-                .antMatchers(
-                        HttpMethod.POST, "/api/v1/categories/**", "/api/v1/books/**", "/api/v1/comments/**")
+                .antMatchers(HttpMethod.POST, "/**")
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests()
-                .antMatchers(
-                        HttpMethod.POST, "/api/v1/comments/**", "/api/v1/orders/**")
+                .antMatchers(HttpMethod.PUT, "/**")
+                .hasAnyAuthority("ADMIN");
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/v1/comments/**", "/api/v1/orders/**")
                 .hasAnyAuthority("USER");
         http.authorizeRequests()
-                .antMatchers(
-                        HttpMethod.PUT, "/api/v1/categories/**", "/api/v1/books/**", "/api/v1/comments/**")
-                .hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/api/v1/login/**", "/api/v1/token/refresh/**").permitAll();
+                .antMatchers("/api/v1/login/**", "/api/v1/token/refresh/**")
+                .permitAll();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
