@@ -104,11 +104,13 @@ public class OrderServiceImpl implements OrderService {
         }
         List<Map<String, String>> result = new ArrayList<>();
         for (Order order : orders) {
-            Map<String, String> map = new HashMap<>();
-            map.put("orderId", String.valueOf(order.getOrderId()));
-            map.put("status", order.getStatus());
-            map.put("deliveryAddress", order.getDeliveryAddress());
-            result.add(map);
+            if (!order.getStatus().equals("CREATED")) {
+                Map<String, String> map = new HashMap<>();
+                map.put("orderId", String.valueOf(order.getOrderId()));
+                map.put("status", order.getStatus());
+                map.put("deliveryAddress", order.getDeliveryAddress());
+                result.add(map);
+            }
         }
         return result;
     }
