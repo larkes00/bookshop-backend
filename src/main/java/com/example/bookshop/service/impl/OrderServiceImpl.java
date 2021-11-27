@@ -142,13 +142,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Boolean changeStatus(Long id, String deliveryAddress) throws OrderNotFoundException {
+    public Boolean changeStatus(Long id, String deliveryAddress, String status) throws OrderNotFoundException {
         Optional<Order> foundOrder = orderRepository.findById(id);
         if (foundOrder.isEmpty()) {
             throw new OrderNotFoundException("Order with id " + id + " not found");
         }
         Order order = foundOrder.get();
         order.setDeliveryAddress(deliveryAddress);
+        if (status != null) {
+            order.setStatus(status);
+        }
         if (order.getStatus().equals("CREATED")) {
             order.setStatus("Обрабатывается");
         }

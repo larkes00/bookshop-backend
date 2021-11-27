@@ -71,9 +71,9 @@ public class OrderController {
         }
     }
     @PatchMapping("/{id}/")
-    public ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestParam String deliveryAddress) {
+    public ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestParam String deliveryAddress, @RequestParam String status) {
         try {
-            return ResponseEntity.ok(orderService.changeStatus(id, deliveryAddress));
+            return ResponseEntity.ok(orderService.changeStatus(id, deliveryAddress, status));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
