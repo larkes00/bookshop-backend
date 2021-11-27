@@ -19,4 +19,6 @@ public interface UserService {
     List<Map<String, String>> getUsers();
 
     Boolean delete(Long id) throws UserNotFoundException;
+
+    Boolean update(Long id, User user) throws UserNotFoundException;
 }

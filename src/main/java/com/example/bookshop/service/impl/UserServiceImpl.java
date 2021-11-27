@@ -94,4 +94,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.delete(user.get());
         return true;
     }
+
+    @Override
+    public Boolean update(Long id, User user) throws UserNotFoundException {
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty()) {
+            throw new UserNotFoundException("User with id " + id + " not found");
+        }
+        User result = foundUser.get();
+        result.setFirstName(user.getFirstName());
+        result.setSecondName(user.getSecondName());
+        result.setPatronymic(user.getPatronymic());
+        result.setPhoneNumber(user.getPhoneNumber());
+        return true;
+    }
 }
