@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
@@ -69,6 +71,17 @@ public class BookController {
             return ResponseEntity.ok(commentService.getBookComments(id));
         } catch (BookNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/{id}/")
+    public ResponseEntity<?> updateBook(@PathVariable Long id,
+                                        @RequestParam BigDecimal price,
+                                        @RequestParam int booksAvailableNumber) {
+        try {
+            return ResponseEntity.ok(bookService.update(id, price, booksAvailableNumber));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

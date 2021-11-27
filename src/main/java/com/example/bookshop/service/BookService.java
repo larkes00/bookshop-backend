@@ -5,6 +5,7 @@ import com.example.bookshop.exception.BookNotFoundException;
 import com.example.bookshop.exception.CategoryNotFoundException;
 import com.example.bookshop.model.Book;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public interface BookService {
 
     List<Map<String, String>> list();
 
-    Boolean update(Long id, Book book) throws BookNotFoundException;
+    Boolean update(Long id, BigDecimal price, int booksAvailableNumber) throws BookNotFoundException;
 
     Boolean delete(Long id) throws BookNotFoundException;
 }

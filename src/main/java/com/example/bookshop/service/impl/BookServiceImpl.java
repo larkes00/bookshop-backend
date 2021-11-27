@@ -11,6 +11,7 @@ import com.example.bookshop.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -65,20 +66,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Boolean update(Long id, Book book) throws BookNotFoundException {
+    public Boolean update(Long id, BigDecimal price, int booksAvailableNumber) throws BookNotFoundException {
         Optional<Book> foundBookById = bookRepository.findById(id);
         if (foundBookById.isEmpty()) {
             throw new BookNotFoundException("Book id " + id + " does not exist");
         }
         Book result = foundBookById.get();
-        result.setPrice(book.getPrice());
-        result.setBookId(book.getBookId());
-        result.setImage(book.getImage());
-        result.setName(book.getName());
-        result.setCategory(book.getCategory());
-        result.setComments(book.getComments());
-        result.setBooksAvailableNumber(book.getBooksAvailableNumber());
-        bookRepository.save(book);
+        result.setPrice(price);
+        result.setBooksAvailableNumber(booksAvailableNumber);
         return true;
     }
 
