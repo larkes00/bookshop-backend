@@ -148,8 +148,10 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderNotFoundException("Order with id " + id + " not found");
         }
         Order order = foundOrder.get();
+        if (deliveryAddress != null) {
+            order.setDeliveryAddress(deliveryAddress);
+        }
         order.setStatus(status);
-        order.setDeliveryAddress(deliveryAddress);
         return true;
     }
 }
