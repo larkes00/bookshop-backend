@@ -74,6 +74,7 @@ public class BookServiceImpl implements BookService {
         Book result = foundBookById.get();
         result.setPrice(price);
         result.setBooksAvailableNumber(booksAvailableNumber);
+        bookRepository.save(result);
         return true;
     }
 
