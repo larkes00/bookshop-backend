@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/api/v1/login");
         http.cors().configurationSource(request -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-            corsConfiguration.setAllowedOrigins(Arrays.asList("book-shop-web.herokuapp.com/"));
+            corsConfiguration.setAllowedOrigins(Arrays.asList("https://book-shop-web.herokuapp.com/"));
             corsConfiguration.setAllowedMethods(Arrays.asList("*"));
             return corsConfiguration;
         });
